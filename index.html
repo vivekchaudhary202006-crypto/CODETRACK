@@ -11,7 +11,40 @@
 </head>
 <body>
 
-    
+   
+<section class="auth-card" id="auth-section">
+    <h2>Welcome to CodeTrack</h2>
+    <p>Sign in to track your coding journey.</p>
+
+    <form id="auth-form">
+        <input
+            type="email"
+            id="auth-email"
+            placeholder="Email address"
+            required
+        >
+
+        <input
+            type="password"
+            id="auth-password"
+            placeholder="Password (minimum 6 characters)"
+            minlength="6"
+            required
+        >
+
+        <button type="submit" id="auth-button">
+            Sign Up
+        </button>
+
+        <button type="button" id="toggle-auth">
+            Already have an account? Log in
+        </button>
+
+        <p id="auth-message"></p>
+    </form>
+</section>
+<div id="app-section" hidden>
+<button id="logout-button" type="button">Log Out</button>
 <header class="page-header">
     <p class="welcome-label">YOUR WORKSPACE</p>
     <h1>CodeTrack</h1>
@@ -28,35 +61,76 @@
 <p>Today's target: 5 problems</p>
 
 <div class="progress-container">
-    <div class="progress-bar"></div>
+<div class="progress-bar" id="progress-bar"></div>
 </div>
-
-<p>3 of 5 problems completed</p>
-
-<button class="primary-button">Continue Coding</button>
-
+<p id="progress-text">3 of 5 problems completed</p>
+<button class="primary-button" id="continue-button">Continue Coding</button>
+<button id="reset-button">Reset Progress</button>
 </div>
-
 <p>60% of daily goal completed</p>
 
-
     </div>
 
-    <div class="card">
-        <h2>Upcoming Contests</h2>
-        <p>Track LeetCode, Codeforces and CodeChef.</p>
+<div class="card">
+    <h2>Upcoming Contests</h2>
+    <p>Track your favourite coding platforms.</p>
+    <div class="contest-item">
+        <h3>LeetCode</h3>
+        <p>Weekly coding challenges</p>
+        <a href="https://leetcode.com/contest/" target="_blank">View Contests ↗</a>
     </div>
+    <div class="contest-item">
+        <h3>Codeforces</h3>
+        <p>Competitive programming rounds</p>
+        <a href="https://codeforces.com/contests" target="_blank">View Contests ↗</a>
+    </div>
+    <div class="contest-item">
+        <h3>CodeChef</h3>
+        <p>Practice and compete</p>
+        <a href="https://www.codechef.com/contests" target="_blank">View Contests ↗</a>
+    </div>
+</div>
     
 
 <div class="card">
     <h2>Problems Solved</h2>
     <p>Keep track of your coding progress.</p>
-    <h3>250</h3>
+    <h3 id="total-problems">250</h3>
     <p>Total problems completed</p>
+    <p id="progress-percentage">60% completed</p>
+    <p id="goal-message"></p>
+    
+<input type="number" id="problem-input" placeholder="Enter total solved">
+<button id="save-problems">Update Count</button>
+
+<div class="card">
+    <h2>Daily Streak</h2>
+    <h3 id="streak-count">0 days</h3>
+    <p>Keep showing up every day.</p>
+    <button id="complete-today">Complete Today's Goal</button>
+</div>
+
+</div>
+
+<section class="contest-dashboard">
+    <h2 class="section-title">Upcoming Contests</h2>
+    <p>All your coding contests in one place.</p>
+    
+<div class="contest-filters">
+    <button class="filter-button active" data-platform="all">All</button>
+    <button class="filter-button" data-platform="leetcode">LeetCode</button>
+    <button class="filter-button" data-platform="codeforces">Codeforces</button>
+    <button class="filter-button" data-platform="codechef">CodeChef</button>
 </div>
 
 
-
+    <div id="contest-list">
+        <p>Loading contests...</p>
+    </div>
+</section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="script.js"></script>
 </div>
 
 

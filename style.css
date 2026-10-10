@@ -129,3 +129,193 @@ p {
     color: var(--text-color);
     margin-bottom: 18px;
 }
+
+#reset-button {
+    background-color: #FFFFFF;
+    color: #475569;
+    padding: 12px 20px;
+    border: 1px solid #CBD5E1;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-left: 8px;
+}
+
+#reset-button:hover {
+    background-color: #F1F5F9;
+}
+
+.contest-item {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.contest-item h3 {
+    font-size: 16px;
+    margin: 0 0 6px;
+    color: var(--text-color);
+}
+
+.contest-item a {
+    color: #0284C7;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.contest-item a:hover {
+    text-decoration: underline;
+}
+
+input[type="number"] {
+    padding: 10px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    width: 150px;
+    outline: none;
+}
+
+input[type="number"]:focus {
+    border-color: var(--accent-color);
+}
+
+#save-problems {
+    background: var(--accent-color);
+    color: #0F172A;
+    padding: 10px 14px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 8px;
+}
+
+#goal-message {
+    color: #16A34A;
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 12px;
+}
+
+.contest-dashboard {
+    margin-top: 36px;
+}
+
+#contest-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+    margin-top: 20px;
+}
+
+.contest-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.filter-button {
+    padding: 10px 16px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: white;
+    color: var(--text-color);
+    cursor: pointer;
+}
+
+.filter-button.active {
+    background: var(--accent-color);
+    border-color: var(--accent-color);
+}
+
+.auth-card {
+    max-width: 420px;
+    margin: 0 auto 40px;
+    padding: 28px;
+    background: #FFFFFF;
+    border: 1px solid #CBD5E1;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+}
+
+.auth-card h2 {
+    margin-top: 0;
+    color: #263445;
+}
+
+.auth-card input {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px;
+    margin: 14px 0;
+    border: 1px solid #CBD5E1;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.auth-card input:focus {
+    outline: 2px solid #38BDF8;
+    border-color: #38BDF8;
+}
+
+.auth-card button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background: #38BDF8;
+    color: #0F172A;
+    font-weight: bold;
+}
+
+.auth-card button:hover {
+    background: #0EA5E9;
+}
+
+#toggle-auth {
+    background: #F1F5F9;
+    color: #263445;
+}
+
+#auth-message {
+    margin-top: 12px;
+    font-size: 14px;
+}
+
+const authSection = document.getElementById("auth-section");
+const appSection = document.getElementById("app-section");
+const logoutButton = document.getElementById("logout-button");
+
+function updateAuthUI(session) {
+    const isLoggedIn = Boolean(session);
+
+    authSection.hidden = isLoggedIn;
+    appSection.hidden = !isLoggedIn;
+}
+
+async function checkLogin() {
+    const { data, error } = await supabaseClient.auth.getSession();
+
+    if (error) {
+        authMessage.textContent = error.message;
+        return;
+    }
+
+    updateAuthUI(data.session);
+}
+
+checkLogin();
+
+supabaseClient.auth.onAuthStateChange(function (event, session) {
+    updateAuthUI(session);
+});
+
+logoutButton.addEventListener("click", async function () {
+    const { error } = await supabaseClient.auth.signOut();
+
+    if (error) {
+        authMessage.textContent = error.message;
+    }
+});
